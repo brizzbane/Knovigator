@@ -10,7 +10,7 @@ export default class Header extends React.PureComponent{
 	static propTypes = {
 	  app: is.shape({
       reduxControlModal: is.func.isRequired,
-      asyncGetPosts: is.func.isRequired
+      asyncGetQuests: is.func.isRequired
     }).isRequired
 	}
 
@@ -21,7 +21,7 @@ export default class Header extends React.PureComponent{
 			label: 'Sign In',
 			Component: Functional,
 			props: {
-				asyncGetPosts: this.props.app.asyncGetPosts,
+				asyncGetQuests: this.props.app.asyncGetQuests,
 			}
 		})
 	}
@@ -43,7 +43,7 @@ export default class Header extends React.PureComponent{
 		return (
 			<div className="header">
         <div className="home">
-          <a>Logo</a>
+					<Link to="/quests"><a>Logo</a></Link>
 
         </div>
         <div className="middle" />

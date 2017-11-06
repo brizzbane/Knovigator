@@ -10,7 +10,7 @@ class Stateful extends React.PureComponent {
 	}
 
 	render() {
-
+		console.log(this.props)
 		return (
 			<div >
 				<h1>I am a stateful Component</h1>

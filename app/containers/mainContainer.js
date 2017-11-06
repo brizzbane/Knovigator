@@ -14,20 +14,18 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   reduxControlModal: app.controlModal,
-	asyncGetPosts: app.asyncGetPosts
+	asyncGetQuests: app.asyncGetQuests
 }, dispatch)
 
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class MainContainer extends React.PureComponent {
 
-  constructor(props){
-    super()
-    this.appControl = {
-      reduxControlModal: props.reduxControlModal,
-      asyncGetPosts: props.asyncGetPosts
-    }
+  appControl = {
+    reduxControlModal: this.props.reduxControlModal,
+    asyncGetQuests: this.props.asyncGetQuests
   }
+
 
 	render(){
 		const { Component, reduxControlModal, ...rest } = this.props;

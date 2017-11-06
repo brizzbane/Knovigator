@@ -9,13 +9,14 @@ function generateMethod (type) {
 			$.ajax({
 				url,
 				type,
+        contentType: "application/json; charset=utf-8",
         ...(options ? options : {}),
 				success: function (data, status, xhr) {
-					console.log('AJAX LOGGING: ', arguments);
+					//console.log('AJAX LOGGING: ', arguments);
 					resolve(data);
 				},
 				error: function(e) {
-					console.log('AJAX LOGGING: ', arguments);
+					//console.log('AJAX LOGGING: ', arguments);
 					reject(e);
 				}
 			})
@@ -25,6 +26,8 @@ function generateMethod (type) {
 
 export const ajax = {
 	post: generateMethod('POST'),
+
+  patch: generateMethod('PATCH'),
 
 	put: generateMethod('PUT'),
 	

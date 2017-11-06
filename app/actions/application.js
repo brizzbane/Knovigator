@@ -15,9 +15,9 @@ export function storePosts(posts) {
 
 //------------- Async Actions ------------
 
-export function asyncGetPosts () {
+export function asyncGetQuests () {
 	return async function (dispatch) {
-    const posts = await api.asyncGetPosts()
+    const posts = await api.asyncGetQuests()
     dispatch(storePosts(posts))
     return posts
   }

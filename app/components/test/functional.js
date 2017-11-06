@@ -3,6 +3,7 @@ import is from 'prop-types'
 import { BrowserHistory } from 'react-router-dom';
 
 import Tabs from '../common/tabs';
+import * as api from '../../actions/api'
 
 
 Functional.propTypes = {
@@ -12,11 +13,16 @@ Functional.propTypes = {
 function Functional (props) {
 
   const click = async () => {
-    console.log(await props.asyncGetPosts())
+    console.log(await api.asyncGetPosts())
 	}
 
   const click2 = async () => {
-    console.log(await props.asyncGetPosts())
+    console.log(await api.asyncNewPost({
+      title: 'knovigator is a platform for peer to peer learning',
+      author: 'metamitya',
+      body: "a chrome extension for importing search sessions into knovigator threads",
+      parent: '',
+    }))
   }
 
 	function navigate () {
