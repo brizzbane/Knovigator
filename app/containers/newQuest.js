@@ -22,13 +22,14 @@ export default class NewQuest extends React.PureComponent {
 
 
   submit = () => {
+    const parent = do { try { this.props.match.params.parent } catch(e) {}} || ''
     api.asyncNewQuest({
       title: this.state.questTitle,
       author: 'metamitya',
-      parent: do { try {this.props.match.params.parent || ''} catch (e) {''}},
+      parent: parent,
     })
       .then((quest)=>{
-        if (do { try {this.props.match.params.parent} catch (e) {false}}) {
+        if (parent) {
           api.asyncEditAnswer({
             _id: this.props.match.params.parent,
             branches: quest._id
