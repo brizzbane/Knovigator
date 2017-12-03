@@ -91,6 +91,7 @@ export default class Quest extends React.PureComponent{
       <div className="questList">
         <h3>{decodeURIComponent(this.props.match.params.title || this.state.title || '')}</h3>
         <hr/>
+
         {this.state.answersArray.map((answer)=>{
           return (
             <div key={`${answer._id}`} className="answerContainer">
@@ -109,7 +110,9 @@ export default class Quest extends React.PureComponent{
             </div>
           )
         })}
+
         <br/>
+
         <div className="answerBox">
           <textarea
             name="answer"

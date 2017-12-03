@@ -17,7 +17,7 @@ import ReduxContainer from './components/test/reduxContainer';
 
 
 let store;
-const reduxDevTools = false;
+const reduxDevTools = true;
 
 if (reduxDevTools) {
 	store = createStore(
