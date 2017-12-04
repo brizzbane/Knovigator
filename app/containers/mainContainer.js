@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import * as app from '../actions/application'
 import Header from '../components/mainContainer/header';
 import Modal from '../components/mainContainer/modal';
+import Dumb from '../components/templates/genericDumbComponent'
 
 
 const mapStateToProps = (state) => ({

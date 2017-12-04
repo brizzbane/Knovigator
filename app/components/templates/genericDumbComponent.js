@@ -7,11 +7,12 @@ GenericComponent.propTypes = {
 	example: is.oneOfType([is.string, is.number])
 }
 
-export default function GenericComponent (props) {
+function GenericComponent (props) {
 
 	function click () {}
 
 	const grid = "col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1";
+
 	return (
 		<div className={grid}>
 			<button onClick={click}>Click Me</button>

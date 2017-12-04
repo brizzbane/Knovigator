@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import * as api from '../actions/api'
 
 
-
 export default class Quests extends React.PureComponent{
   static propTypes = {}
 
@@ -27,6 +26,7 @@ export default class Quests extends React.PureComponent{
       this.getQuests(nextProps.match.params.parent)
     }
   }
+
 
 
   getQuests = async (parent) => {
