@@ -1,46 +1,54 @@
 import ajax from '../helpers/ajax'
 
-// {title, body, author, parent, date}
-export async function asyncNewAnswer (post) {
-  return ajax.post('/api/answers', {
+
+export async function postAnswer (post) {
+  return ajax.post('/api/postAnswer', {
     body: JSON.stringify(post)
   })
 }
 
-export async function asyncGetAnswers () {
-  return ajax.get('/api/answers')
+export async function getParent (id) {
+  return ajax.get(`/api/getParent/${id}`)
 }
 
-export async function asyncAnswerQuery (id) {
-  return ajax.get(`/api/answers/${id}`)
+export async function getAnswers (id) {
+  return ajax.get(`/api/getAnswers/${id}`)
 }
 
-export async function asyncEditAnswer (answer) {
-  return ajax.patch('/api/answers', {
+export async function editAnswer (answer) {
+  return ajax.patch('/api/editAnswer', {
     body: JSON.stringify(answer)
   })
 }
 
-export async function asyncNewQuest (quest) {
-  return ajax.post('/api/quests', {
+export async function postQuest (quest) {
+  return ajax.post('/api/postQuest', {
     body: JSON.stringify(quest)
   })
 }
 
-export async function asyncGetQuests () {
-  return ajax.get('/api/quests')
+export async function getQuests () {
+  return ajax.get('/api/getQuests')
 }
 
-export async function asyncQuestQuery (id) {
-  return ajax.get(`/api/quest/${id}`)
+export async function questQuery (id) {
+  return ajax.get(`/api/questQuery/${id}`)
 }
 
-export async function asyncEditQuest (quest) {
-  return ajax.patch('/api/quests', {
+export async function editQuest (quest) {
+  return ajax.patch('/api/editQuest', {
     body: JSON.stringify(quest)
   })
 }
 
-export async function asyncGetBranches (id) {
-  return ajax.get(`/api/quests/${id}`)
+export async function getBranches (id) {
+  return ajax.get(`/api/getBranches/${id}`)
+}
+
+export async function deleteAnswer (id) {
+  return ajax.delete(`/api/deleteAnswer/${id}`)
+}
+
+export async function deleteQuest (id) {
+  return ajax.delete(`/api/deleteQuest/${id}`)
 }

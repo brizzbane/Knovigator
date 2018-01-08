@@ -17,7 +17,7 @@ export function storePosts(posts) {
 
 export function asyncGetQuests () {
 	return async function (dispatch) {
-    const posts = await api.asyncGetQuests()
+    const posts = await api.getQuests()
     dispatch(storePosts(posts))
     return posts
   }

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import is from 'prop-types';
-import { Link } from 'react-router-dom'
 
 import * as api from '../actions/api'
+import Answer from '../components/common/answer'
+import ActionBar from '../components/common/actionBar'
+import QuestPreview from '../components/common/questPreview'
 
 
 
@@ -22,43 +24,45 @@ export default class Quest extends React.PureComponent{
     this.state = {
       title: props.match.params.title,
       answersArray: [],
-      answer: '',
+      answerInput: '',
+      parent: null
     }
   }
 
 
   componentDidMount() {
-    if(!this.props.match.params.title) {
-      this.updateTitle()
-    } else {
-      this.getAnswers()
-    }
+    this.getQuestInfo()
   }
 
 
   componentWillReceiveProps (nextProps) {
+    //When user navigates from one quest to another, this component doesn't remount, it just receives the new id prop from the url
     if(nextProps.match.params.id !== this.props.match.params.id) {
-      if(!nextProps.match.params.title) {
-        this.updateTitle(nextProps.match.params.id)
-      }
-      this.getAnswers(nextProps.match.params.id)
-    }
-    if(nextProps.match.params.title && nextProps.match.params.title !== this.props.match.params.title) {
-      this.state.title = nextProps.match.params.title
+      this.getQuestInfo(nextProps.match.params.id)
     }
   }
 
 
-  updateTitle = (id = this.props.match.params.id) => {
-    api.asyncQuestQuery(id)
+  getQuestInfo = (id = this.props.match.params.id) => {
+    api.questQuery(id)
       .then((quest)=>{
-        this.props.history.replace(`/quests/view/${quest.title}/${quest._id}`)
+
+        this.setState({
+          title: quest.title,
+          parent: quest.parentDetails ? quest.parentDetails : null
+        })
+
+        if(this.props.match.params.title !== quest.title) {
+          //this.props.history.replace(`/quests/view/${quest.title}/${quest._id}`)
+        }
       })
+
+    this.getAnswers(id)
   }
 
 
   getAnswers = (id = this.props.match.params.id) => {
-    api.asyncAnswerQuery(id).then( answersArray => {
+    api.getAnswers(id).then( answersArray => {
       this.setState({answersArray})
     })
   }
@@ -71,57 +75,45 @@ export default class Quest extends React.PureComponent{
 
 
   submitAnswer = () => {
-    api.asyncNewAnswer({
+    api.postAnswer({
       quest: this.props.match.params.id,
-      body: this.state.answer,
+      body: this.state.answerInput,
       author: 'metamitya'
     })
-      .then((answer) => {
+      .then(() => {
         this.getAnswers()
-        api.asyncEditQuest({
-          _id: this.props.match.params.id,
-          highlightedAnswer: JSON.stringify(answer)
-        })
+        this.setState({answerInput: ''})
       })
   }
 
 
   render() {
     return(
-      <div className="questList">
-        <h3>{decodeURIComponent(this.props.match.params.title || this.state.title || '')}</h3>
-        <hr/>
+      <Fragment>
+        <ActionBar title="QUEST"/>
 
-        {this.state.answersArray.map((answer)=>{
-          return (
-            <div key={`${answer._id}`} className="answerContainer">
-              <p className="answerAuthor"><b>{answer.author}</b></p>
-              <p className="answerBody">{answer.body}</p>
-              <Link to={`/quests/new/${answer._id}`}><button>Branch</button></Link>
-              {answer.branches.length === 1 &&
-                <Link to={`/quests/view/${encodeURIComponent(answer.branches[0])}`}>
-                  <button>1 Branch Expand >></button>
-                </Link>}
-              {answer.branches.length > 1 &&
-                <Link to={`/quests/${answer._id}`}>
-                  <button>{answer.branches.length} Branches Expand >></button>
-                </Link>}
-              <hr/>
-            </div>
-          )
-        })}
+        <div className="pageTitle">QUEST</div>
 
-        <br/>
+        <div className="answerList">
 
-        <div className="answerBox">
-          <textarea
-            name="answer"
-            placeholder="type answer here..."
-            onChange={this.inputHandler}
-            value={this.state.answer}/>
-          <button onClick={this.submitAnswer}>+Answer</button>
+          <div className="questTitleContainer">
+            <h3 className="questTitle">Q: {decodeURIComponent(this.props.match.params.title || this.state.title || '')}</h3>
+            {this.state.parent &&
+              <QuestPreview scaleDown quest={this.state.parent.questDetails} highlightedAnswer={this.state.parent}/>}
+          </div>
+
+          {this.state.answersArray.map( answer => <Answer key={answer._id} answer={answer}/>)}
+
+          <div className="answerBox">
+            <textarea
+              name="answerInput"
+              placeholder="type answer here..."
+              onChange={this.inputHandler}
+              value={this.state.answerInput}/>
+            <button onClick={this.submitAnswer}>+Answer</button>
+          </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

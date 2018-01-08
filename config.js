@@ -7,8 +7,8 @@ module.exports = {
   paths: {
 		srcServerMain: './server/babelServer.js',
 		srcServerjs: ['./server/**/*.js', './config.js'],
-		srcHtml: './app/index.html',
-		mainJs: './app/main.js',
+		srcHtml: './app/assets/index.html',
+		mainJs: './app/app.js',
 		js: ['./app/**/*.js'],
 		css: [
 			'./app/**/*.css',
@@ -17,7 +17,6 @@ module.exports = {
 	},
 
   database: 'mongo'
-
 
 };
 

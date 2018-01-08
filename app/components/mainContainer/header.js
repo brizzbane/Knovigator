@@ -43,7 +43,7 @@ export default class Header extends React.PureComponent{
 		return (
 			<div className="header">
         <div className="home">
-					<Link to="/quests"><a>Logo</a></Link>
+					<Link to="/quests">Logo</Link>
 
         </div>
         <div className="middle" />

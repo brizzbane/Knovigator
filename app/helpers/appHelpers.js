@@ -13,3 +13,48 @@ export function errorHandler (errors) {
 	if (Array.isArray(errors)) { errors.map( value => toastrMsg('error', JSON.stringify(value)) ) }
 	else toastrMsg('error', errors)	
 }
+
+
+
+export function tryIt (toTry) {
+
+  class TryAttempt {
+    constructor () {
+      Object.defineProperties(this, {
+        'error': {
+          configurable: true,
+          value: null
+        },
+
+        'catch': {
+          value: (catchCallback) => {
+            if(this.error) {
+              catchCallback(this.error)
+            }
+            return this
+          }
+        },
+
+        'result': {
+          configurable: true,
+          value: null
+        }
+      })
+    }
+  }
+
+  const tryAttempt = new TryAttempt()
+
+  try {
+    Object.defineProperty(tryAttempt, 'result', {
+      value: toTry()
+    })
+  } catch (e) {
+    console.log(e)
+    Object.defineProperty(tryAttempt, 'error', {
+      value: e
+    })
+  }
+
+  return tryAttempt
+}

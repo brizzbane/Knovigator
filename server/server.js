@@ -23,7 +23,7 @@ if(config.database === 'mongo') require('./mongo.js');
 
 app.use(express.static(__dirname + '/../public'));
 
-require('./modules/apiRoutes')(app);
+require('./modules/apiRoutes/apiRoutes')(app);
 
 app.get('*', (req, res, next) => {
   console.log('catchAll');

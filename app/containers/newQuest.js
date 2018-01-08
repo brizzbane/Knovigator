@@ -10,8 +10,25 @@ export default class NewQuest extends React.PureComponent {
   };
 
 
-  state = {
-    questTitle: ''
+  constructor (props) {
+    super()
+    const parent = props.match.params.parent
+    this.state = {
+      parent: parent,
+      parentPreview: null,
+      questTitle: parent ? 'Comments:' : '',
+      answer: '',
+    }
+  }
+
+
+  componentDidMount () {
+    if (this.state.parent) {
+      api.getParent(this.state.parent).then( parent => {
+        console.log(parent)
+        this.setState({parentPreview: parent})
+      })
+    }
   }
 
 
@@ -22,16 +39,15 @@ export default class NewQuest extends React.PureComponent {
 
 
   submit = () => {
-    const parent = do { try { this.props.match.params.parent } catch(e) {}} || ''
-    api.asyncNewQuest({
+    api.postQuest({
       title: this.state.questTitle,
       author: 'metamitya',
-      parent: parent,
+      parent: this.state.parent,
     })
       .then((quest)=>{
-        if (parent) {
-          api.asyncEditAnswer({
-            _id: this.props.match.params.parent,
+        if (this.state.parent) {
+          api.editAnswer({
+            _id: this.state.parent,
             branches: quest._id
           })
         }
@@ -43,11 +59,35 @@ export default class NewQuest extends React.PureComponent {
   render() {
     return (
       <div>
-        <textarea
+        Quest Title:
+        <br/>
+        <input
           name="questTitle"
-          placeholder="type query here..."
+          placeholder="Quest name"
           onChange={this.inputHandler}
           value={this.state.questTitle}/>
+        <br/>
+        <br/>
+
+        {this.state.parentPreview &&
+          <div>
+            Parent Preview:
+            <div>
+              {this.state.parentPreview.author}
+            </div>
+            <div>
+              {this.state.parentPreview.body}
+            </div>
+          </div>}
+
+        <br/>
+        <br/>
+        <textarea
+          name="answer"
+          placeholder="provide quest details or answer"
+          onChange={this.inputHandler}
+          value={this.state.answer}
+        />
         <button
           onClick={this.submit}>
             Start Quest

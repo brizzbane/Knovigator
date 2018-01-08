@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -6,7 +7,8 @@ import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 
 import mainReducer from './reducers/mainReducer';
-import Quests from './containers/quests'
+import Quests from './containers/allQuests'
+import Branches from './containers/branches'
 import Quest from './containers/quest'
 import NewQuest from './containers/newQuest'
 import MainContainer from './containers/mainContainer';
@@ -34,13 +36,7 @@ if (reduxDevTools) {
 }
 
 
-export function renderApp() {
-	//Authenticate and get resources here
-	//if(window.express && window.express.errors) errorHandler(window.express.errors);
-	
-	// authenticate(user =>{
-	// 	store.dispatch(newSession(user))
-	// })
+function renderApp() {
 
 	return (
 		<Provider store={store} key="provider">
@@ -52,7 +48,7 @@ export function renderApp() {
             <MainContainer exact path='/quests/new/:parent' Component={NewQuest}/>
             <MainContainer exact path='/quests/view/:id' Component={Quest}/>
             <MainContainer exact path='/quests/view/:title/:id' Component={Quest}/>
-            <MainContainer exact path='/quests/:parent' Component={Quests}/>
+            <MainContainer exact path='/branches/:parent' Component={Branches}/>
 						<MainContainer exact path='/functional' Component={Functional}/>
 						<MainContainer exact path='/stateful' Component={Stateful}/>
 						<MainContainer path='/stateful/:param' Component={Stateful}/>
@@ -65,16 +61,4 @@ export function renderApp() {
 	);
 }
 
-
-
-//--------------TEST DISPATCH ACTIONS-------------------
-
-// console.log(store.getState())
-// let unsubscribe = store.subscribe(() =>
-//   console.log(store.getState())
-// );
-
-//store.dispatch(AppActions.newPopup({visible:true}))
-
-
-
+ReactDOM.render(renderApp(), document.getElementById('app'));
