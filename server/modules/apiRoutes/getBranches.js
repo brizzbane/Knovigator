@@ -27,7 +27,11 @@ export default function getBranches (req, res) {
                   reject(err)
                 }
 
-                quest._doc.highlightedAnswerDetails = answer._doc
+                if(!answer) {
+                  delete quest._doc.highlightedAnswer
+                } else {
+                  quest._doc.highlightedAnswerDetails = answer._doc
+                }
               })
           }
         })

@@ -96,7 +96,7 @@ gulp.task('frontend', ['copyHtml', 'watchifyApp', 'bundleLibs', 'css', 'lintApp'
 //Start a local development server
 gulp.task('connect', function () {
 	connect.server({
-		root: ['dist'],
+		root: ['public'],
 		port: port,
 		base: devBaseUrl,
 		livereload: true
