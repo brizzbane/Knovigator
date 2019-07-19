@@ -1,18 +1,14 @@
 const express = require('express');
-const config = require('../config.js')
+const config = require('../config.js');
+const apiRoutes = require('./modules/apiRoutes/apiRoutes');
 
 const app = express();
 
+//Logger
 app.use((req, res, next) => {
   console.log(`${req.method}: ${req.originalUrl}`);
   next()
 });
-
-//Capture and kill requests
-app.get('/favicon.ico', (req, res) => {
-  res.send()
-})
-//--------------------------
 
 app.use(require('connect-livereload')({port: 35729}));
 
@@ -23,7 +19,7 @@ if(config.database === 'mongo') require('./mongo.js');
 
 app.use(express.static(__dirname + '/../public'));
 
-require('./modules/apiRoutes/apiRoutes')(app);
+apiRoutes(app);
 
 app.get('*', (req, res, next) => {
   console.log('catchAll');

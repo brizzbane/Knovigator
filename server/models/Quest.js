@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
+const dateTimeUtils = require('../utils/dateTime');
 
 const Quest = new mongoose.Schema({
   title: String,
   author: String,
   parent: String,
   highlightedAnswer: String,
-  date: { type: String, default: timeNow },
+  date: { type: String, default: dateTimeUtils.timeNow },
 });
 
 
@@ -21,6 +21,3 @@ Quest.pre('save', function (next) {
 
 
 module.exports = mongoose.model('Quest', Quest, 'Quests');
-
-
-function timeNow () {return moment().format('MMMM Do YYYY, h:mm:ss a')}

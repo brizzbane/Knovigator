@@ -29,10 +29,7 @@ module.exports = (app) => {
             res.send(savedAnswer)
           })
       });
-
     })
-
-
 
   //api.editAnswer
   app.route('/api/editAnswer')
@@ -55,10 +52,6 @@ module.exports = (app) => {
         })
     })
 
-
-
-
-
   //api.getAnswers
 	app.route('/api/getAnswers/:id')
     .get((req, res) => {
@@ -71,9 +64,6 @@ module.exports = (app) => {
           res.send(data)
         })
     })
-
-
-
 
   //api.deleteAnswer
   app.route('/api/deleteAnswer/:id')
@@ -94,7 +84,6 @@ module.exports = (app) => {
         }
       })
     })
-
 
   //api.deleteQuest
   app.route('/api/deleteQuest/:id')
@@ -117,8 +106,6 @@ module.exports = (app) => {
         }
       })
     })
-
-
 
   //api.postQuest
   app.route('/api/postQuest')
@@ -143,13 +130,9 @@ module.exports = (app) => {
       })
     })
 
-
-
   //api.getQuests
   app.route('/api/getQuests')
     .get(getQuests)
-
-
 
   //api.editQuest
   app.route('/api/editQuest')
@@ -167,8 +150,6 @@ module.exports = (app) => {
           res.send(doc)
         })
     })
-
-
 
   //api.questQuery
   app.route('/api/questQuery/:id')
@@ -204,15 +185,9 @@ module.exports = (app) => {
         })
     })
 
-
-
-
   //api.getBranches
   app.route('/api/getBranches/:id')
     .get(getBranches)
-
-
-
 
   //api.getParent
   app.route('/api/getParent/:id')
@@ -235,6 +210,4 @@ module.exports = (app) => {
             })
         })
     })
-
-
 }
